@@ -58,10 +58,12 @@ class tests:
     @staticmethod
     def assert_neighbors(tree, node_key, left_key, right_key):
         node = tree.search(node_key)
-        
-        assert node.get_right() is tree.search(right_key), \
+        right_result = tree.search(right_key) if right_key != None else None
+        left_result = tree.search(left_key) if left_key != None else None
+
+        assert node.get_right() is right_result, \
             f"Checking neighbors for {node_key}, right neighbor is {node.get_right()} but search returned something else when searching for key {right_key}"
-        assert node.get_left() is tree.search(left_key), \
+        assert node.get_left() is left_result, \
             f"Checking neighbors for {node_key}, left neighbor is {node.get_left()} but search returned something else when searching for key {left_key}"
         
     @staticmethod
