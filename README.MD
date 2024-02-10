@@ -18,6 +18,6 @@ Make sure that tests.py is importing AVLTree correctly
 
 You can import the tests with
 ```python
-import tests from tests
+from tests import tests
 ```
 All methods are static so you can simply run whichever function you want
