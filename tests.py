@@ -78,6 +78,11 @@ class TestHelper:
         node_right = node.get_right() if node is not None else None
         node_left = node.get_left() if node is not None else None
 
+        if right_key is None:
+            node_right = node_right.get_key()
+        if left_key is None:
+            node_left = node_left.get_key()
+
         assert node_right is right_result, (
             f"Checking neighbors for {node_key}, right neighbor is {node.get_right()} but search returned something "
             f"else when searching for key {right_key}"
