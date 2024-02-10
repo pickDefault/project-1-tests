@@ -16,6 +16,8 @@ This makes a request to add your changes to the original repository
 ## To run
 Make sure that tests.py is importing AVLTree correctly
 
+Add `__repr__` implementation to AVLNode so the `assert` statements work correctly
+
 You can import the tests with
 ```python
 import tests from tests
