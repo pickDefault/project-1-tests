@@ -58,6 +58,19 @@ class tests:
         # TODO: empty the tree and test to see everything is correct
         
     @staticmethod
+    def test_avl_to_array():
+        tree = AVLTree()
+
+        keys = [23, 4, 30, 11, 7, 15, 40, 43, 2, 1]
+        tests.insert_array(tree, keys)
+        keys.sort()
+        keys = [(key, key) for key in keys] # tests.insert_array uses the key as a value, so we do the same here
+        avl_to_array_result = tree.avl_to_array()
+
+        assert keys == avl_to_array_result, \
+            f"Expected avl_to_array() to return \n{keys}\nbut got\n{avl_to_array_result}, "
+        
+    @staticmethod
     def assert_neighbors(tree, node_key, left_key, right_key):
         node = tree.search(node_key)
         right_result = tree.search(right_key) if right_key != None else None
