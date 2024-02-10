@@ -12,47 +12,47 @@ class tests:
         
         # test RL rotation
         tests.insert_array(tree, keys[0:5])
-        tests.assert_neighbors(tree, 7, 4, 11) 
+        tests.assert_neighbors(tree, 7, 4, 11, 5)
 
         # test LR rotation
-        tests.insert_array(keys[5:6], keys[5:6]) # insert 15
-        tests.assert_neighbors(tree, 15, None, None)
-        tests.assert_neighbors(tree, 23, 15, 30)
-        tests.assert_neighbors(tree, 11, 7, 23)
-        tests.assert_neighbors(tree, 7, 4, None)
+        tests.insert_array(tree, keys[5:6]) # insert 15
+        tests.assert_neighbors(tree, 15, None, None, 6)
+        tests.assert_neighbors(tree, 23, 15, 30, 6)
+        tests.assert_neighbors(tree, 11, 7, 23, 6)
+        tests.assert_neighbors(tree, 7, 4, None,6)
         tests.test_root(tree, 11)
         
         # test L rotation
         tests.insert_array(tree, keys[6:8]) # insert 40, 43
-        tests.assert_neighbors(tree, 40, 30, 43)
-        tests.assert_neighbors(tree, 23, 15, 40)
+        tests.assert_neighbors(tree, 40, 30, 43,8)
+        tests.assert_neighbors(tree, 23, 15, 40,8)
         
         # tests R rotation
         tests.insert_array(tree, keys[8:10]) # insert 2, 1
-        tests.assert_neighbors(tree, 4, 2, 7)
-        tests.assert_neighbors(tree, 2, 1, None)
-        tests.assert_neighbors(tree, 7, None, None)
-        tests.assert_neighbors(tree, 11, 4, 23)
+        tests.assert_neighbors(tree, 4, 2, 7,10)
+        tests.assert_neighbors(tree, 2, 1, None,10)
+        tests.assert_neighbors(tree, 7, None, None,10)
+        tests.assert_neighbors(tree, 11, 4, 23,10)
         tests.test_root(tree, 11)
         
         # test deletions
         tests.test_deletion(tree, 1, 0)
-        tests.assert_neighbors(tree, 4, 2, 7)
-        tests.assert_neighbors(tree, 2, None, None)
-        tests.assert_neighbors(tree, 7, None, None)
-        tests.assert_neighbors(tree, 11, 4, 23)
+        tests.assert_neighbors(tree, 4, 2, 7,9)
+        tests.assert_neighbors(tree, 2, None, None,9)
+        tests.assert_neighbors(tree, 7, None, None,9)
+        tests.assert_neighbors(tree, 11, 4, 23,9)
         tests.test_root(tree, 11)
         
         tests.test_deletion(tree, 2, 0)
-        tests.assert_neighbors(tree, 4, None, 7)
-        tests.assert_neighbors(tree, 7, None, None)
-        tests.assert_neighbors(tree, 11, 4, 23)
+        tests.assert_neighbors(tree, 4, None, 7,8)
+        tests.assert_neighbors(tree, 7, None, None,8)
+        tests.assert_neighbors(tree, 11, 4, 23,8)
         tests.test_root(tree, 11)
         
         # test L rotation
         tests.test_deletion(tree, 7, 1)
-        tests.assert_neighbors(tree, 11, 4, 15)
-        tests.assert_neighbors(tree, 23, 11, 40)
+        tests.assert_neighbors(tree, 11, 4, 15,7)
+        tests.assert_neighbors(tree, 23, 11, 40,7)
         tests.test_root(tree, 23)
         
         # TODO: empty the tree and test to see everything is correct
@@ -71,7 +71,7 @@ class tests:
             f"Expected avl_to_array() to return \n{keys}\nbut got\n{avl_to_array_result}, "
         
     @staticmethod
-    def assert_neighbors(tree, node_key, left_key, right_key):
+    def assert_neighbors(tree, node_key, left_key, right_key, size):
         node = tree.search(node_key)
         right_result = tree.search(right_key) if right_key != None else None
         left_result = tree.search(left_key) if left_key != None else None
@@ -82,6 +82,8 @@ class tests:
             f"Checking neighbors for {node_key}, right neighbor is {node.get_right()} but search returned something else when searching for key {right_key}"
         assert node_left is left_result, \
             f"Checking neighbors for {node_key}, left neighbor is {node.get_left()} but search returned something else when searching for key {left_key}"
+        assert tree.size()==size, \
+            f"size error"
         
     @staticmethod
     def insert_array(tree, key_array):
@@ -121,3 +123,4 @@ class tests:
         # print(tree.get_root().get_key())
         # print(tree.get_root().get_left().get_key())
         # print(tree.get_root().get_right().get_key())
+
