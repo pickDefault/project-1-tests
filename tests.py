@@ -3,25 +3,6 @@ from avl_template import AVLTree
 class tests:
     
     @staticmethod
-    def test1():
-        tree=AVLTree()
-
-
-        tree.insert(6,",")
-        tree.insert(7,",")
-
-        #
-        # print(tree.get_root().get_key())
-        tree.delete(tree.get_root())
-        # print(tree.get_root().get_key())
-        tree.delete(tree.get_root())
-        # print(tree.get_root())
-        tree.insert(6,",")
-        # print(tree.get_root().get_key())
-        # print(tree.get_root().get_left().get_key())
-        # print(tree.get_root().get_right().get_key())
-    
-    @staticmethod
     def testInsertDelete():
         tree = AVLTree()
 
@@ -40,13 +21,11 @@ class tests:
         tests.test_root(tree, 11)
         
         # test L rotation
-        print(f"CHECK KEYS {keys[6:8]}")
         tests.insert_array(tree, keys[6:8]) # insert 40, 43
         tests.assert_neighbors(tree, 40, 30, 43)
         tests.assert_neighbors(tree, 23, 15, 40)
         
         # tests R rotation
-        print(f"CHECK KEYS {keys[8:10]}")
         tests.insert_array(tree, keys[8:10]) # insert 2, 1
         tests.assert_neighbors(tree, 4, 2, 7)
         tests.assert_neighbors(tree, 2, 1, None)
@@ -104,3 +83,22 @@ class tests:
     def test_root(tree, root_key):
         assert tree.get_root() is tree.search(root_key), \
             f"Root is {tree.get_root()}, but search returned something else when searching for {root_key}"    
+    
+    @staticmethod
+    def test1():
+        tree=AVLTree()
+
+
+        tree.insert(6,",")
+        tree.insert(7,",")
+
+        #
+        # print(tree.get_root().get_key())
+        tree.delete(tree.get_root())
+        # print(tree.get_root().get_key())
+        tree.delete(tree.get_root())
+        # print(tree.get_root())
+        tree.insert(6,",")
+        # print(tree.get_root().get_key())
+        # print(tree.get_root().get_left().get_key())
+        # print(tree.get_root().get_right().get_key())
