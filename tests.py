@@ -103,6 +103,10 @@ class testHelper:
         assert tree.get_root() is tree.search(root_key), \
             f"Root is {tree.get_root()}, but search returned something else when searching for {root_key}"    
     
+    """
+    @param tree: tree to test
+    @param tree_keys_array: Array with all keys present in the tree
+    """
     @staticmethod
     def test_avl2array(tree, tree_keys_array):
 
