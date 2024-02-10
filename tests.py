@@ -37,7 +37,7 @@ class Tests:
         TestHelper.test_root(tree, 11)
 
         # test deletions
-        TestHelper.test_deletion(tree, 1, 0)
+        TestHelper.test_deletion(tree, 1, 2)
         TestHelper.assert_neighbors(tree, 4, 2, 7, 9)
         TestHelper.assert_neighbors(tree, 2, None, None, 9)
         TestHelper.assert_neighbors(tree, 7, None, None, 9)
@@ -51,7 +51,7 @@ class Tests:
         TestHelper.test_root(tree, 11)
 
         # test L rotation
-        TestHelper.test_deletion(tree, 7, 1)
+        TestHelper.test_deletion(tree, 7, 2)
         TestHelper.assert_neighbors(tree, 11, 4, 15, 7)
         TestHelper.assert_neighbors(tree, 23, 11, 40, 7)
         TestHelper.test_root(tree, 23)
