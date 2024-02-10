@@ -63,12 +63,9 @@ class tests:
 
         keys = [23, 4, 30, 11, 7, 15, 40, 43, 2, 1]
         tests.insert_array(tree, keys)
-        keys.sort()
-        keys = [(key, key) for key in keys] # tests.insert_array uses the key as a value, so we do the same here
-        avl_to_array_result = tree.avl_to_array()
 
-        assert keys == avl_to_array_result, \
-            f"Expected avl_to_array() to return \n{keys}\nbut got\n{avl_to_array_result}, "
+        tests.test_avl2array(tree, keys)
+
         
     @staticmethod
     def assert_neighbors(tree, node_key, left_key, right_key, size):
@@ -105,6 +102,14 @@ class tests:
         assert tree.get_root() is tree.search(root_key), \
             f"Root is {tree.get_root()}, but search returned something else when searching for {root_key}"    
     
+    @staticmethod
+    def test_avl2array(tree, tree_keys_array):
+
+        expectedArray = [(key, key) for key in sorted(tree_keys_array)] # tests.insert_array uses the key as a value, so we do the same here
+        avl_to_array_result = tree.avl_to_array()
+
+        assert expectedArray == avl_to_array_result, \
+            f"Expected avl_to_array() to return \n{expectedArray}\nbut got\n{avl_to_array_result}"
     @staticmethod
     def test1():
         tree=AVLTree()
