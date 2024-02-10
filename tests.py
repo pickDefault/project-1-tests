@@ -71,10 +71,10 @@ class testHelper:
     @staticmethod
     def assert_neighbors(tree, node_key, left_key, right_key, size):
         node = tree.search(node_key)
-        right_result = tree.search(right_key) if right_key != None else None
-        left_result = tree.search(left_key) if left_key != None else None
-        node_right = node.get_right() if node != None else None
-        node_left = node.get_left() if node != None else None
+        right_result = tree.search(right_key).get_key() if right_key != None else None
+        left_result = tree.search(left_key).get_key() if left_key != None else None
+        node_right = node.get_right().get_key() if node != None else None
+        node_left = node.get_left().get_key() if node != None else None
 
         assert node_right is right_result, \
             f"Checking neighbors for {node_key}, right neighbor is {node.get_right()} but search returned something else when searching for key {right_key}"
