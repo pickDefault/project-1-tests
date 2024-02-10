@@ -115,6 +115,3 @@ class testHelper:
 
         assert expectedArray == avl_to_array_result, \
             f"Expected avl_to_array() to return \n{expectedArray}\nbut got\n{avl_to_array_result}"
-
-tests.test_avl_to_array()
-tests.testInsertDelete()
