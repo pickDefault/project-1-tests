@@ -77,9 +77,9 @@ class testHelper:
         node_left = node.get_left().get_key() if node != None else None
 
         assert node_right is right_result, \
-            f"Checking neighbors for {node_key}, right neighbor is {node.get_right()} but search returned something else when searching for key {right_key}"
+            f"Checking neighbors for {node_key}, right neighbor is {node_right} but search returned something else when searching for key {right_key}"
         assert node_left is left_result, \
-            f"Checking neighbors for {node_key}, left neighbor is {node.get_left()} but search returned something else when searching for key {left_key}"
+            f"Checking neighbors for {node_key}, left neighbor is {node_left} but search returned something else when searching for key {left_key}"
         assert tree.size()==size, \
             f"size error"
         
