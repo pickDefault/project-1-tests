@@ -36,7 +36,7 @@ class tests:
         testHelper.test_root(tree, 11)
         
         # test deletions
-        testHelper.test_deletion(tree, 1, 0)
+        testHelper.test_deletion(tree, 1, 2)
         testHelper.assert_neighbors(tree, 4, 2, 7,9)
         testHelper.assert_neighbors(tree, 2, None, None,9)
         testHelper.assert_neighbors(tree, 7, None, None,9)
@@ -50,7 +50,7 @@ class tests:
         testHelper.test_root(tree, 11)
         
         # test L rotation
-        testHelper.test_deletion(tree, 7, 1)
+        testHelper.test_deletion(tree, 7, 2)
         testHelper.assert_neighbors(tree, 11, 4, 15,7)
         testHelper.assert_neighbors(tree, 23, 11, 40,7)
         testHelper.test_root(tree, 23)
@@ -65,16 +65,43 @@ class tests:
         testHelper.insert_array(tree, keys)
 
         testHelper.test_avl2array(tree, keys)
+        
+    @staticmethod
+    def test_join():
+        tree_tuple = testHelper.test_join_helper([4, 2, 5], 
+                                                 [20, 22, 16, 18, 14], 
+                                                 10, 
+                                                 10)
+        for tree in tree_tuple:
+            #  tests for trees [4, 2, 5] and [20, 22, 16, 18, 14]
+            #  balancing should be called on node c and node x
+            testHelper.test_root(tree, 10)
+            testHelper.assert_neighbors(tree, 10, 4, 20, 9)
+            testHelper.assert_neighbors(tree, 4, 2, 5, 9)
+            testHelper.assert_neighbors(tree, 20, 16, 22, 9)
+            testHelper.assert_neighbors(tree, 16, 14, 18, 9)
 
+        tree_tuple = testHelper.test_join_helper([4, 2, 5], 
+                                                 [20, 22, 16],
+                                                 10, 
+                                                 10)
+        for tree in tree_tuple:
+            testHelper.test_root(tree, 10)
+            testHelper.assert_neighbors(tree, 10, 4, 20, 7)
+            testHelper.assert_neighbors(tree, 20, 16, 22, 7)
+            testHelper.assert_neighbors(tree, 4, 2, 5, 7)
+    
 class testHelper:
     # Helper functions for tests class. No need to use any of them.
     @staticmethod
     def assert_neighbors(tree, node_key, left_key, right_key, size):
         node = tree.search(node_key)
-        right_result = tree.search(right_key).get_key() if right_key != None else None
-        left_result = tree.search(left_key).get_key() if left_key != None else None
-        node_right = node.get_right().get_key() if node != None else None
-        node_left = node.get_left().get_key() if node != None else None
+        search_right_key = tree.search(right_key) if right_key is not None else None
+        search_left_key = tree.search(left_key) if left_key is not None else None
+        right_result = search_right_key.get_key() if search_right_key is not None else None
+        left_result = search_left_key.get_key() if search_left_key is not None else None
+        node_right = node.get_right().get_key() if node is not None else None
+        node_left = node.get_left().get_key() if node is not None else None
 
         assert node_right is right_result, \
             f"Checking neighbors for {node_key}, right neighbor is {node_right} but search returned something else when searching for key {right_key}"
@@ -115,3 +142,23 @@ class testHelper:
 
         assert expectedArray == avl_to_array_result, \
             f"Expected avl_to_array() to return \n{expectedArray}\nbut got\n{avl_to_array_result}"
+
+    @staticmethod
+    def test_join_helper(key_array1, key_array2, joiningNodeKey, joiningNodeValue):
+        tree1 = AVLTree()
+        tree2 = AVLTree()
+
+        testHelper.insert_array(tree1, key_array1)
+        testHelper.insert_array(tree2, key_array2)
+        
+        tree1.join(tree2, joiningNodeKey, joiningNodeValue)
+
+        tree1_flip_order = AVLTree()
+        tree2_flip_order = AVLTree()
+
+        testHelper.insert_array(tree1_flip_order, key_array2)
+        testHelper.insert_array(tree2_flip_order, key_array1)
+        
+        tree1_flip_order.join(tree2_flip_order, joiningNodeKey, joiningNodeValue)
+
+        return [tree1, tree1_flip_order]
