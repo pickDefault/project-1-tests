@@ -56,9 +56,9 @@ class tests:
         testHelper.test_root(tree, 23)
         
         testHelper.test_deletion(tree, 23, 1)
-        testHelper.assert_neighbors(tree, 30, 11, 40)
-        testHelper.assert_neighbors(tree, 11, 4, 15)
-        testHelper.assert_neighbors(tree, 40, None, 43)
+        testHelper.assert_neighbors(tree, 30, 11, 40,6)
+        testHelper.assert_neighbors(tree, 11, 4, 15,6)
+        testHelper.assert_neighbors(tree, 40, None, 43,6)
         
         # TODO: empty the tree and test to see everything is correct
         
