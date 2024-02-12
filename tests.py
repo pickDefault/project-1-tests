@@ -60,6 +60,7 @@ class tests:
         testHelper.assert_neighbors(tree, 11, 4, 15,6)
         testHelper.assert_neighbors(tree, 40, None, 43,6)
         
+        # TODO: test deleting node with no successor
         # TODO: empty the tree and test to see everything is correct
         
     @staticmethod
