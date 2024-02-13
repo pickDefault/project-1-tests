@@ -144,18 +144,22 @@ class testHelper:
     @staticmethod
     def assert_neighbors(tree, node_key, left_key, right_key, size):
         node = tree.search(node_key)
-        search_right_key = tree.search(right_key) if right_key is not None else None
-        search_left_key = tree.search(left_key) if left_key is not None else None
-        right_result = search_right_key.get_key() if search_right_key is not None else None
-        left_result = search_left_key.get_key() if search_left_key is not None else None
-        node_right = node.get_right().get_key() if node is not None else None
-        node_left = node.get_left().get_key() if node is not None else None
 
-        assert node_right is right_result, \
+        # We should test for `node is None` in case the search fails
+        if node is not None:
+            node_right = node.get_right().get_key()
+            node_left = node.get_left().get_key()
+            # We should always be able to get a node's right/left children (In the worst case node is virtual) if its not none so this is well defined
+        else:
+            raise ValueError(f"assert_neighbors was called to check neighbors for node with key {node_key} but search couldn't find a node with that key.")
+
+        # If left_key/right_key is None we would expect node_right to be a virtual node so this comparison should work
+        # If left_key/right_key is not None we would expect node_right to be real and the comparison should work
+        assert node_right.get_key() == right_key, \
             f"Checking neighbors for {node_key}, right neighbor is {node_right} but search returned something else when searching for key {right_key}"
-        assert node_left is left_result, \
+        assert node_left == left_key, \
             f"Checking neighbors for {node_key}, left neighbor is {node_left} but search returned something else when searching for key {left_key}"
-        assert tree.size()==size, \
+        assert tree.size() == size, \
             f"Expected tree size to be {size} but got {tree.size()} instead"
         
     @staticmethod
