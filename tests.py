@@ -130,37 +130,39 @@ class tests:
         t1, t2 = testHelper.test_split_helper([20, 10, 12, 8, 9, 25, 23, 27],
                                               12)
         
-        testHelper.assert_neighbors(t1, 9, 8, 10, 3)
-        testHelper.assert_neighbors(t2, 23, 20, 25, 4)
-        testHelper.assert_neighbors(t2, 25, None, 27, 4)
+        # We don't have to keep an updated size field for nodes after splitting so we don't check the size here
+        testHelper.assert_neighbors(t1, 9, 8, 10)
+        testHelper.assert_neighbors(t2, 23, 20, 25)
+        testHelper.assert_neighbors(t2, 25, None, 27)
         
         t1, t2 = testHelper.test_split_helper([20, 10, 12, 8, 9, 25, 23, 27],
-                                25)
+                                              25)
         # add tests
         
     
 class testHelper:
     # Helper functions for tests class. No need to use any of them.
     @staticmethod
-    def assert_neighbors(tree, node_key, left_key, right_key, size):
+    def assert_neighbors(tree, node_key, left_key, right_key, size=-1):
         node = tree.search(node_key)
 
         # We should test for `node is None` in case the search fails
         if node is not None:
-            node_right = node.get_right().get_key()
-            node_left = node.get_left().get_key()
-            # We should always be able to get a node's right/left children (In the worst case node is virtual) if its not none so this is well defined
+            node_right_key = node.get_right().get_key()
+            node_left_key = node.get_left().get_key()
+            # We should always be able to get a node's right/left children's keys because search always returns real nodes, or None
         else:
             raise ValueError(f"assert_neighbors was called to check neighbors for node with key {node_key} but search couldn't find a node with that key.")
 
         # If left_key/right_key is None we would expect node_right to be a virtual node so this comparison should work
         # If left_key/right_key is not None we would expect node_right to be real and the comparison should work
-        assert node_right.get_key() == right_key, \
-            f"Checking neighbors for {node_key}, right neighbor is {node_right} but search returned something else when searching for key {right_key}"
-        assert node_left == left_key, \
-            f"Checking neighbors for {node_key}, left neighbor is {node_left} but search returned something else when searching for key {left_key}"
-        assert tree.size() == size, \
-            f"Expected tree size to be {size} but got {tree.size()} instead"
+        assert node_right_key == right_key, \
+            f"Checking neighbors for {node_key}, right neighbor is {node_right_key} but search returned something else when searching for key {right_key}"
+        assert node_left_key == left_key, \
+            f"Checking neighbors for {node_key}, left neighbor is {node_left_key} but search returned something else when searching for key {left_key}"
+        if( size > 0 ):
+            assert tree.size() == size, \
+                f"Expected tree size to be {size} but got {tree.size()} instead"
         
     @staticmethod
     def insert_array(tree, key_array):
