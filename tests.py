@@ -50,15 +50,15 @@ class tests:
         testHelper.test_root(tree, 11)
         
         # test L rotation
-        testHelper.test_deletion(tree, 7, 2)
-        testHelper.assert_neighbors(tree, 11, 4, 15,7)
-        testHelper.assert_neighbors(tree, 23, 11, 40,7)
+        testHelper.test_deletion(tree, 7, 3)
+        testHelper.assert_neighbors(tree, 11, 4, 15, 7)
+        testHelper.assert_neighbors(tree, 23, 11, 40, 7)
         testHelper.test_root(tree, 23)
         
-        testHelper.test_deletion(tree, 23, 1)
-        testHelper.assert_neighbors(tree, 30, 11, 40,6)
-        testHelper.assert_neighbors(tree, 11, 4, 15,6)
-        testHelper.assert_neighbors(tree, 40, None, 43,6)
+        testHelper.test_deletion(tree, 23, 0)
+        testHelper.assert_neighbors(tree, 30, 11, 40, 6)
+        testHelper.assert_neighbors(tree, 11, 4, 15, 6)
+        testHelper.assert_neighbors(tree, 40, None, 43, 6)
         
         # TODO: test deleting node with no successor
         # TODO: empty the tree and test to see everything is correct
@@ -125,7 +125,7 @@ class tests:
         t1, t2 = testHelper.test_split_helper([20], 20)
         
         assert t1.get_root() is None and t2.get_root() is None, \
-            f"Splitting a tree with only one node did not return two empty trees"
+            "Splitting a tree with only one node did not return two empty trees"
 
         t1, t2 = testHelper.test_split_helper([20, 10, 12, 8, 9, 25, 23, 27],
                                               12)
@@ -160,7 +160,7 @@ class testHelper:
             f"Checking neighbors for {node_key}, right neighbor is {node_right_key} but search returned something else when searching for key {right_key}"
         assert node_left_key == left_key, \
             f"Checking neighbors for {node_key}, left neighbor is {node_left_key} but search returned something else when searching for key {left_key}"
-        if( size > 0 ):
+        if( size >= 0 ):
             assert tree.size() == size, \
                 f"Expected tree size to be {size} but got {tree.size()} instead"
         
