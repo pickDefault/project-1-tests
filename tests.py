@@ -50,7 +50,7 @@ class tests:
         testHelper.test_root(tree, 11)
         
         # test L rotation
-        testHelper.test_deletion(tree, 7, 3)
+        testHelper.test_deletion(tree, 7, 2)
         testHelper.assert_neighbors(tree, 11, 4, 15, 7)
         testHelper.assert_neighbors(tree, 23, 11, 40, 7)
         testHelper.test_root(tree, 23)
