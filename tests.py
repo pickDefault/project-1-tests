@@ -11,7 +11,7 @@ class tests:
         keys = [23, 4, 30, 11, 7, 15, 40, 43, 2, 1]
         
         # test RL rotation
-        testHelper.insert_array(tree, keys[0:5])
+        testHelper.insert_array(tree, keys[0:5]) # insert 23, 4, 30, 11, 7
         testHelper.assert_neighbors(tree, 7, 4, 11, 5)
 
         # test LR rotation
@@ -60,6 +60,8 @@ class tests:
         testHelper.assert_neighbors(tree, 11, 4, 15, 6)
         testHelper.assert_neighbors(tree, 40, None, 43, 6)
         
+        # TODO: use helper function test_height to make sure height is 
+        #       updated correctly in every insertion and deletion
         # TODO: test deleting node with no successor
         # TODO: empty the tree and test to see everything is correct
         
@@ -84,9 +86,13 @@ class tests:
             #  balancing should be called on node c and node x
             testHelper.test_root(tree, 10)
             testHelper.assert_neighbors(tree, 10, 4, 20, 9)
+            testHelper.test_height(tree, 10, 3)
             testHelper.assert_neighbors(tree, 4, 2, 5, 9)
+            testHelper.test_height(tree, 4, 1)
             testHelper.assert_neighbors(tree, 20, 16, 22, 9)
+            testHelper.test_height(tree, 20, 2)
             testHelper.assert_neighbors(tree, 16, 14, 18, 9)
+            testHelper.test_height(tree, 16, 1)
 
         tree_tuple = testHelper.test_join_helper([4, 2, 5], 
                                                  [20, 22, 16],
@@ -96,8 +102,11 @@ class tests:
         for tree in tree_tuple:
             testHelper.test_root(tree, 10)
             testHelper.assert_neighbors(tree, 10, 4, 20, 7)
+            testHelper.test_height(tree, 10, 2)
             testHelper.assert_neighbors(tree, 20, 16, 22, 7)
+            testHelper.test_height(tree, 20, 1)
             testHelper.assert_neighbors(tree, 4, 2, 5, 7)
+            testHelper.test_height(tree, 4, 1)
         
         tree_tuple = testHelper.test_join_helper([],
                                                  [],
@@ -108,6 +117,7 @@ class tests:
         for tree in tree_tuple:
             testHelper.test_root(tree, 10)
             testHelper.assert_neighbors(tree, 10, None, None, 1)
+            testHelper.test_height(tree, 10, 0)
             
         tree_tuple = testHelper.test_join_helper([12],
                                                  [],
@@ -118,6 +128,7 @@ class tests:
         for tree in tree_tuple:
             testHelper.test_root(tree, 12)
             testHelper.assert_neighbors(tree, 12, 10, None, 2)
+            testHelper.test_height(tree, 12, 1)
             
     @staticmethod
     def test_split():
@@ -234,9 +245,25 @@ class testHelper:
     def test_split_helper(key_array, split_node_key):
         tree = AVLTree()
         testHelper.insert_array(tree, key_array)
-        split_node_key = tree.search(split_node_key)
-        
-        assert split_node_key is not None, \
-            f"Key {split_node_key} was not found by search"
+        split_node_key = testHelper(tree, split_node_key)
         
         return tree.split(split_node_key)
+    
+    @staticmethod
+    def test_height(tree, node_key, expected_height):
+        node = testHelper.assert_search(tree, node_key)
+        
+        actual_height = node.get_height()
+        assert actual_height == expected_height, \
+            f"Expected node with key {node_key} to have height {expected_height} but get_height() returned {actual_height}"
+        
+    """searches for node_key in tree, returns error if not found
+    """
+    @staticmethod
+    def assert_search(tree, node_key):
+        node = tree.search(node_key)
+
+        assert node_key is not None, \
+            f"Key {node_key} was not found by search even though it was supposed to be in the tree"
+            
+        return node
