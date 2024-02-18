@@ -245,9 +245,9 @@ class testHelper:
     def test_split_helper(key_array, split_node_key):
         tree = AVLTree()
         testHelper.insert_array(tree, key_array)
-        split_node_key = testHelper(tree, split_node_key)
+        split_node = testHelper.assert_search(tree, split_node_key)
         
-        return tree.split(split_node_key)
+        return tree.split(split_node)
     
     @staticmethod
     def test_height(tree, node_key, expected_height):
