@@ -1,4 +1,4 @@
-from avl_template import AVLTree, AVLNode
+from AVLTree import AVLTree, AVLNode
 
 AVLNode.__repr__ = lambda self: str(self.get_key())
 
@@ -130,6 +130,26 @@ class tests:
             testHelper.assert_neighbors(tree, 12, 10, None, 2)
             testHelper.test_height(tree, 12, 1)
             
+        tree_tuple = testHelper.test_join_helper([33, 54, 29, 31],
+                                                 [23],
+                                                 25,
+                                                 25,
+                                                 3)
+        
+        for tree in tree_tuple:
+            testHelper.test_root(tree, 29)
+            testHelper.assert_neighbors(tree, 29, 25, 33, 6)
+            testHelper.test_height(tree, 29, 2)
+            testHelper.assert_neighbors(tree, 25, 23, None, 6)
+            testHelper.test_height(tree, 25, 1)
+            testHelper.assert_neighbors(tree, 23, None, None, 6)
+            testHelper.test_height(tree, 23, 0)
+            testHelper.assert_neighbors(tree, 33, 31, 54, 6)
+            testHelper.test_height(tree, 33, 1)
+            testHelper.assert_neighbors(tree, 31, None, None, 6)
+            testHelper.test_height(tree, 31, 0)
+            testHelper.assert_neighbors(tree, 54, None, None, 6)
+            testHelper.test_height(tree, 54, 0)
     @staticmethod
     def test_split():
         
@@ -168,9 +188,9 @@ class testHelper:
         # If left_key/right_key is None we would expect node_right to be a virtual node so this comparison should work
         # If left_key/right_key is not None we would expect node_right to be real and the comparison should work
         assert node_right_key == right_key, \
-            f"Checking neighbors for {node_key}, right neighbor is {node_right_key} but search returned something else when searching for key {right_key}"
+            f"Checking neighbors for {node_key}, right neighbor is {node_right_key} but we expected {right_key}"
         assert node_left_key == left_key, \
-            f"Checking neighbors for {node_key}, left neighbor is {node_left_key} but search returned something else when searching for key {left_key}"
+            f"Checking neighbors for {node_key}, left neighbor is {node_left_key} but we expected {left_key}"
         if( size >= 0 ):
             assert tree.size() == size, \
                 f"Expected tree size to be {size} but got {tree.size()} instead"
@@ -265,5 +285,5 @@ class testHelper:
 
         assert node_key is not None, \
             f"Key {node_key} was not found by search even though it was supposed to be in the tree"
-            
+
         return node
