@@ -76,6 +76,10 @@ class tests:
         
     @staticmethod
     def test_join():
+        # tests join for symmetry, if you implemented without symmetry replace
+        # 'for tree in tree tuple:'
+        # with
+        # 'tree = tree_tuple[0]'
         tree_tuple = testHelper.test_join_helper([4, 2, 5], 
                                                  [20, 22, 16, 18, 14], 
                                                  10, 
